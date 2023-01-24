@@ -1,0 +1,14 @@
+{
+  "name": "ployconjs",
+  "version": "0.0.1",
+  "description": "a client for ploygondb",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "NekaouMike",
+  "license": "ISC",
+  "dependencies": {
+    "ws": "^8.5.0"
+  }
+}
