@@ -8,6 +8,7 @@ const db = new ploycon("localhost:8000","Better_Password");
 
 main()
 async function main(){
+    await db.open()
     console.log(await db.getschema('ExampleDB'))
 }
 ```
