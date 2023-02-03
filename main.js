@@ -49,7 +49,16 @@ retrieve = async function(table,row,loc){
   var ws = this.ws
   var key = this.key
   return new Promise(function (resolve, reject) {
-    const location = "rows."+row+"."+loc
+    var location ="rows"
+    if(row == undefined){
+      location = "rows"
+    }
+    else if(loc == undefined){
+      location = "rows."+row
+    }
+    else{
+      location = "rows."+row+"."+loc
+    }
     ws.send(JSON.stringify({action: "retrieve",password: key,dbname: table,location: location}))
     ws.on('message', async function message(msg) {
     var data = JSON.parse(msg)
