@@ -1,6 +1,6 @@
 {
   "name": "ployconjs",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "a JS client for ploygondb",
   "main": "main.js",
   "scripts": {
