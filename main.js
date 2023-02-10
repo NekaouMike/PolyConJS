@@ -22,34 +22,36 @@ open = async function() {
 record = async function(table,row,loc,data){
   var ws = this.ws
   var key = this.key
-  return new Promise(async function (resolve, reject) {
+  return new Promise(function (resolve, reject) {
     const location = "rows."+row+"."+loc
-    console.log(location)
     ws.send(JSON.stringify({action: "record",password: key,dbname: table,location: location,value: data}))
-    return resolve(await ws.on('message', async function message(msg) {
+    ws.on('message', async function message(msg) {
     var data = JSON.parse(msg)
     // if(data.Status.startsWith("Failure.")){
     //   reject(data = "ERROR: "+data.Status.trim().replace("Failure.",""))
     // }
-    return(data)
-  }))
+    resolve(data)
+  });
+  ws.on('error', async function error(msg) {
+    reject(msg)
+  });
 })
 }
 getschema = async function(table){
   var ws = this.ws
   var key = this.key
-  return new Promise(async function(resolve, reject) {
+  return new Promise(function (resolve, reject) {
     ws.send(JSON.stringify({action: "retrieve",password: key,dbname: table,location: "schema"}))
-    return resolve(await ws.on('message', async function message(msg) {
+    ws.on('message', async function message(msg) {
     var data = JSON.parse(msg)
-    return(data)
-  }))
+    resolve(data)
+  });
 })
 }
 retrieve = async function(table,row,loc){
   var ws = this.ws
   var key = this.key
-  return new Promise(async function(resolve, reject) {
+  return new Promise(function (resolve, reject) {
     var location ="rows"
     if(row == undefined){
       location = "rows"
@@ -61,34 +63,34 @@ retrieve = async function(table,row,loc){
       location = "rows."+row+"."+loc
     }
     ws.send(JSON.stringify({action: "retrieve",password: key,dbname: table,location: location}))
-    return resolve(await ws.on('message', async function message(msg) {
+    ws.on('message', async function message(msg) {
     var data = JSON.parse(msg)
-    return(data)
-  }))
+    resolve(data)
+  });
 })
 }
 search = async function(table,col,val){
   var ws = this.ws
   var key = this.key
-  return new Promise(async function(resolve, reject) {
+  return new Promise(function (resolve, reject) {
     const query = col+":"+val
     ws.send(JSON.stringify({action: "search",password: key,dbname: table,location: "rows",value: query}))
-    return resolve(await ws.on('message', async function message(msg) {
+    ws.on('message', async function message(msg) {
     var data = JSON.parse(msg)
-    return(data)
-  }))
+    resolve(data)
+  });
 })
 }
 append = async function(table,data){
   var ws = this.ws
   var key = this.key
-  return new Promise(async function(resolve, reject) {
+  return new Promise(function (resolve, reject) {
     data = JSON.stringify(data)
     ws.send(JSON.stringify({action: "append",password: key,dbname: table,location: "rows",value: data}))
-    return resolve(await ws.on('message', async function message(msg) {
+    ws.on('message', async function message(msg) {
     var data = JSON.parse(msg)
-    return(data)
-  }))
+    resolve(data)
+  });
 })
 }
 close = function (){
