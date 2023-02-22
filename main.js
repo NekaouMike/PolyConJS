@@ -23,7 +23,19 @@ record = async function(table,row,loc,data){
   var ws = this.ws
   var key = this.key
   return new Promise(function (resolve, reject) {
-    const location = "rows."+row+"."+loc
+    var location = "rows"
+    if(row == "schema"){
+      location = "schema"
+    } else if(row == "all"){
+      location = "rows"
+    }
+    else{
+    if(loc == undefined){
+      location = "rows."+row
+    }else{
+    location = "rows."+row+"."+loc
+    }
+    }
     ws.send(JSON.stringify({action: "record",password: key,dbname: table,location: location,value: data}))
     ws.on('message', async function message(msg) {
     var data = JSON.parse(msg)
