@@ -1,8 +1,8 @@
-# PloyConJS
-A node JS lib to talk with [PloygonDB](https://github.com/JewishLewish/PolygonDB) simply<br/>
+# PolyConJS
+A node JS lib to talk with [PolygonDB](https://github.com/JewishLewish/PolygonDB) simply<br/>
 Example basic use
 ```js
-const ploycon = require('ployconjs');
+const ploycon = require('polyconjs');
 
 const db = new ploycon("localhost:8000","Better_Password");
 
@@ -12,4 +12,4 @@ async function main(){
     console.log(await db.getschema('ExampleDB'))
 }
 ```
-Read our [WIKI](https://github.com/NekaouMike/PloyConJS/wiki) for all functions and usage
+Read our [WIKI](https://github.com/NekaouMike/PolyConJS/wiki) for all functions and usage
