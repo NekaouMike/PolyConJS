@@ -130,7 +130,6 @@ append = async function(table,data){
   var ws = this.ws
   var key = this.key
   return new Promise(function (resolve, reject) {
-    data = JSON.stringify(data)
     ws.send(JSON.stringify({action: "append",password: key,dbname: table,location: "rows",value: data}))
     ws.on('message', async function message(msg) {
     var data = JSON.parse(msg)
