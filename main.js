@@ -39,10 +39,11 @@ record = async function(table,row,loc,data){
     ws.send(JSON.stringify({action: "record",password: key,dbname: table,location: location,value: data}))
     ws.on('message', async function message(msg) {
     var data = JSON.parse(msg)
-    // if(data.Status.startsWith("Failure.")){
-    //   reject(data = "ERROR: "+data.Status.trim().replace("Failure.",""))
-    // }
+    if(data.error){
+      reject(data.error)
+    }else{
     resolve(data)
+    }
   });
   ws.on('error', async function error(msg) {
     reject(msg)
@@ -69,7 +70,11 @@ remove = async function(table,row,loc){
     ws.send(JSON.stringify({action: "record",password: key,dbname: table,location: location,value: null}))
     ws.on('message', async function message(msg) {
     var data = JSON.parse(msg)
+    if(data.error){
+      reject(data.error)
+    }else{
     resolve(data)
+    }
   });
 })
 }
@@ -80,7 +85,11 @@ getschema = async function(table){
     ws.send(JSON.stringify({action: "retrieve",password: key,dbname: table,location: "schema"}))
     ws.on('message', async function message(msg) {
     var data = JSON.parse(msg)
+    if(data.error){
+      reject(data.error)
+    }else{
     resolve(data)
+    }
   });
 })
 }
@@ -101,7 +110,11 @@ retrieve = async function(table,row,loc){
     ws.send(JSON.stringify({action: "retrieve",password: key,dbname: table,location: location}))
     ws.on('message', async function message(msg) {
     var data = JSON.parse(msg)
+    if(data.error){
+      reject(data.error)
+    }else{
     resolve(data)
+    }
   });
 })
 }
@@ -122,8 +135,12 @@ search = async function(table,col,val,index){
     }
     ws.on('message', async function message(msg) {
     var data = JSON.parse(msg)
+    if(data.error){
+      reject(data.error)
+    }else{
     resolve(data)
-  });
+    }
+    });
 })
 }
 append = async function(table,data){
@@ -133,7 +150,11 @@ append = async function(table,data){
     ws.send(JSON.stringify({action: "append",password: key,dbname: table,location: "rows",value: data}))
     ws.on('message', async function message(msg) {
     var data = JSON.parse(msg)
+    if(data.error){
+      reject(data.error)
+    }else{
     resolve(data)
+    }
   });
 })
 }
